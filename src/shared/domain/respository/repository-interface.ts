@@ -14,7 +14,7 @@ export interface RepositoryInterface<E extends Entity, EntityId extends ValueObj
     findAll(): Promise<E[]>;
 
 
-    getEntityName(): new(...args: any[]) => E;
+    getEntity(): new(...args: any[]) => E;
 
     
 

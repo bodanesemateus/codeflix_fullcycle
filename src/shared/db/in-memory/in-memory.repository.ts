@@ -1,4 +1,5 @@
 import { Entity } from "../../domain/entity";
+import { NotFoundError } from "../../domain/errors/not-found.errors";
 import { RepositoryInterface } from "../../domain/respository/repository-interface";
 import { ValueObject } from "../../domain/value-object";
 
@@ -23,7 +24,7 @@ export abstract class InMemoryRepository<E extends Entity, EntityId extends Valu
             );
 
             if (indexFound === -1) {
-                throw new Error('Entity not found');
+                throw new NotFoundError(entity.entity_id, this.getEntity());
             }
             this.items[indexFound] = entity;
         }
@@ -34,7 +35,7 @@ export abstract class InMemoryRepository<E extends Entity, EntityId extends Valu
             );
 
             if (indexFound === -1) {
-                throw new Error('Entity not found');
+                throw new NotFoundError(entity, this.getEntity());
             }
             this.items.splice(indexFound, 1);
         }
@@ -53,6 +54,6 @@ export abstract class InMemoryRepository<E extends Entity, EntityId extends Valu
             return this.items;
         }
         
-        abstract getEntityName(): new (...args: any[]) => E;
+        abstract getEntity(): new (...args: any[]) => E;
 
 }
